@@ -19,6 +19,7 @@ module:
   datetime: 0
   dblog: 0
   decoupled_router: 0
+  demo_core: 0
   devel: 0
   devel_generate: 0
   dynamic_page_cache: 0

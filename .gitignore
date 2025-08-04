@@ -1,4 +1,5 @@
 # Ignore non-custom parts of Drupal.
+/web/.phpstorm.meta.php
 /web/core
 /web/modules/contrib
 /web/profiles/contrib
@@ -8,6 +9,7 @@
 /web/sites/default/development.*
 /web/sites/example.*
 /web/sites/*/default.*
+/web/sites/*/*.local.yml
 /web/sites/*/*.local.php
 /web/sites/simpletest
 
@@ -41,19 +43,6 @@
 
 # Ignore Composer-managed dependencies.
 /vendor
-
-# Ignore Vagrant virtual machine data.
-/.vagrant
-
-# Ignore local VM settings overrides.
-/vm-settings.local.yml
-
-# Ignore local Lando VM Settings
-/.lando.local.yml
-/.lando
-
-# Ignore Platform.sh local cache.
-.platform/local
 
 # Ignore .env files as they are personal
 /.env

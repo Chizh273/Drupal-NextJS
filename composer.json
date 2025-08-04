@@ -57,6 +57,9 @@
             },
             "drupal/pathauto": {
                 "#3489108: Fix PHP 8.4 implicit nullable deprecation": "https://git.drupalcode.org/project/pathauto/-/merge_requests/91.patch"
+            },
+            "drupal/subrequests": {
+                "#3524429: Fix for implicit nullable deprecation": "https://git.drupalcode.org/project/subrequests/-/merge_requests/33.patch"
             }
         },
         "drupal-scaffold": {

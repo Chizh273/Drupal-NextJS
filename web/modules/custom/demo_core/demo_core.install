@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the demo_core module.
+ */
+
+use Drupal\consumers\Entity\ConsumerInterface;
+
+/**
+ * Implements hook_install().
+ */
+function demo_core_install(): void {
+  /** @var \Drupal\user\UserStorageInterface $userStorage */
+  $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+  /** @var \Drupal\Core\Entity\Sql\SqlEntityStorageInterface $consumerStorage */
+  $consumerStorage = \Drupal::entityTypeManager()->getStorage('consumer');
+
+  // Create a new nextjs user.
+  $next_user = $userStorage
+    ->create([
+      'name' => 'nextjs',
+      'mail' => 'nextjs@example.com',
+      'status' => TRUE,
+      'roles' => ['nextjs'],
+    ]);
+  $next_user->save();
+
+  // Make all existing consumers non-default.
+  array_map(
+    static fn (ConsumerInterface $consumer) => $consumer->set('is_default', FALSE)->save(),
+    $consumerStorage->loadMultiple()
+  );
+
+  // Create a new consumer for Next.js.
+  $consumer = $consumerStorage
+    ->create([
+      'client_id' => 'nextjs',
+      'label' => 'Next.js',
+      'secret' => 'Secret',
+      'is_default' => TRUE,
+      'user_id' => $next_user->id(),
+      'grant_types' => ['client_credentials'],
+      'scopes' => [
+        ['scope_id' => 'nextjs_site'],
+      ],
+    ]);
+  $consumer->save();
+}

@@ -4,8 +4,8 @@ status: true
 dependencies: {  }
 id: local
 label: Local
-base_url: 'https://localhost:3000'
-preview_url: 'https://localhost:3000/api/draft'
+base_url: 'https://drupal11.ddev.site:3000'
+preview_url: 'https://drupal11.ddev.site:3000/api/draft'
 preview_secret: Secret
-revalidate_url: 'https://localhost:3000/api/revalidate'
+revalidate_url: 'http://localhost:3000/api/revalidate'
 revalidate_secret: Secret

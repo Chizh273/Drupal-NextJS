@@ -1,0 +1,13 @@
+uuid: 9ae60436-3832-40d0-beb0-dcff38b2c7c6
+langcode: en
+status: true
+dependencies: {  }
+id: node.article
+site_resolver: site_selector
+configuration:
+  sites:
+    local: local
+revalidator: path
+revalidator_configuration:
+  revalidate_page: true
+  additional_paths: ''
