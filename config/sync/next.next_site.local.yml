@@ -1,0 +1,11 @@
+uuid: 1de47d69-2d18-4f33-bd68-fb7401cdef71
+langcode: en
+status: true
+dependencies: {  }
+id: local
+label: Local
+base_url: 'https://localhost:3000'
+preview_url: 'https://localhost:3000/api/draft'
+preview_secret: Secret
+revalidate_url: 'https://localhost:3000/api/revalidate'
+revalidate_secret: Secret
