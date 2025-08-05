@@ -7,14 +7,14 @@ const nextConfig = {
         // protocol: 'https',
         hostname: process.env.NEXT_IMAGE_DOMAIN,
         // port: '',
-        pathname: '/sites/default/files/**',
+        pathname: "/sites/default/files/**",
       },
 
       {
         // protocol: 'https',
-        hostname: 'localhost',
+        hostname: "localhost",
         // port: '',
-        pathname: '/sites/default/files/**',
+        pathname: "/sites/default/files/**",
       },
     ],
   },

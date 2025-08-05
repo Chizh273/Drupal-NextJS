@@ -249,10 +249,10 @@ web_extra_exposed_ports:
     http_port: 2999
     https_port: 3000
 
-web_extra_daemons:
-  - name: "nextjs"
-    command: "npm run dev"
-    directory: /var/www/html/drupal11-next
+#web_extra_daemons:
+#  - name: "nextjs"
+#    command: "npm run dev"
+#    directory: /var/www/html/drupal11-next
 
 # override_config: false
 # By default, config.*.yaml files are *merged* into the configuration
