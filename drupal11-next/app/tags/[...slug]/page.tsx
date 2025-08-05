@@ -29,7 +29,7 @@ export default async function TagPage(props: TagPageProps) {
   // Try to get the term by its path.
   let term
   try {
-    term = await getEntityByPath<DrupalTaxonomyTerm>(`/tags/${slug.join("/")}`)
+    term = await getEntityByPath<DrupalTaxonomyTerm & { description: { processed: string } }>(`/tags/${slug.join("/")}`)
   } catch (e) {
     notFound()
   }
@@ -54,16 +54,25 @@ export default async function TagPage(props: TagPageProps) {
   return (
     <main className="p-8">
       <h1 className="mb-10 text-6xl font-black">Term {term.name}</h1>
-      {articles?.length ? (
-        articles.map((node) => (
-          <div key={node.id}>
-            <ArticleTeaser node={node} />
-            <hr className="my-20" />
-          </div>
-        ))
-      ) : (
-        <p className="py-4">No nodes found</p>
+
+      {term.description?.processed && (
+        <div
+          dangerouslySetInnerHTML={{ __html: term.description?.processed }}
+          className="mt-6 font-serif text-xl leading-loose prose"
+        />
       )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {articles?.length ? (
+          articles.map((node) => (
+            <div key={node.id} className="h-auto">
+              <ArticleTeaser node={node} />
+            </div>
+          ))
+        ) : (
+          <p className="py-4">No nodes found</p>
+        )}
+      </div>
     </main>
   )
 }

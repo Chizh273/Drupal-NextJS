@@ -22,7 +22,7 @@ export async function getEntityByPath<T extends JsonApiResource>(
   const tag = `${translatedPath.entity.type}:${translatedPath.entity.id}`
 
   if (type === "node--article") {
-    params.include = "field_image,uid"
+    params.include = "field_image,uid,field_tags"
   }
 
   const resource = await drupal.getResource<T>(type, uuid, {
