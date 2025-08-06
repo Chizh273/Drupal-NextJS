@@ -24,6 +24,7 @@ module:
   devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
+  facets: 0
   field: 0
   field_ui: 0
   file: 0
@@ -35,6 +36,8 @@ module:
   jsonapi: 0
   jsonapi_menu_items: 0
   jsonapi_resources: 0
+  jsonapi_search_api: 0
+  jsonapi_search_api_facets: 0
   jsonapi_views: 0
   link: 0
   menu_link_content: 0
@@ -55,6 +58,8 @@ module:
   schemata: 0
   schemata_json_schema: 0
   search: 0
+  search_api: 0
+  search_api_db: 0
   serialization: 0
   shortcut: 0
   simple_oauth: 0
