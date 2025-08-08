@@ -1,0 +1,44 @@
+diff --git a/src/Entity/Facet.php b/src/Entity/Facet.php
+index e9163f1..f4cf01b 100644
+--- a/src/Entity/Facet.php
++++ b/src/Entity/Facet.php
+@@ -372,7 +372,7 @@ class Facet extends ConfigEntityBase implements FacetInterface {
+   /**
+    * {@inheritdoc}
+    */
+-  public function setWidget($id, array $configuration = NULL) {
++  public function setWidget($id, ?array $configuration = NULL) {
+     if ($configuration === NULL) {
+       $instance = $this->getWidgetManager()->createInstance($id);
+       // Get the default configuration for this plugin.
+@@ -410,7 +410,7 @@ class Facet extends ConfigEntityBase implements FacetInterface {
+   /**
+    * {@inheritdoc}
+    */
+-  public function setHierarchy($id, array $configuration = NULL) {
++  public function setHierarchy($id, ?array $configuration = NULL) {
+     if ($configuration === NULL) {
+       $instance = $this->getHierarchyManager()->createInstance($id);
+       // Get the default configuration for this plugin.
+diff --git a/src/FacetInterface.php b/src/FacetInterface.php
+index b92b5ca..c44803e 100644
+--- a/src/FacetInterface.php
++++ b/src/FacetInterface.php
+@@ -18,7 +18,7 @@ interface FacetInterface extends ConfigEntityInterface {
+    *   (optional) The facet widget plugin configuration. If missed, the default
+    *   plugin configuration will be filled.
+    */
+-  public function setWidget($id, array $configuration = NULL);
++  public function setWidget($id, ?array $configuration = NULL);
+ 
+   /**
+    * Returns the facet widget definition.
+@@ -47,7 +47,7 @@ interface FacetInterface extends ConfigEntityInterface {
+    *   (optional) The facet hierarchy plugin configuration. When empty, the
+    *   default plugin configuration will be used.
+    */
+-  public function setHierarchy($id, array $configuration = NULL);
++  public function setHierarchy($id, ?array $configuration = NULL);
+ 
+   /**
+    * Returns the facet hierarchy definition.

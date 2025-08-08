@@ -13,13 +13,15 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "next": "^15.1.2",
+    "next-drupal": "^2.0.0-beta.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next-drupal": "^2.0.0-beta.2"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.12.7",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

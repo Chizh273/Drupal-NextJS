@@ -1,14 +1,14 @@
 import Image from "next/image"
 import { absoluteUrl, formatDate } from "@/lib/utils"
 import type { DrupalNode } from "next-drupal"
-import Link from 'next/link';
+import Link from "next/link"
 
 interface ArticleProps {
   node: DrupalNode
 }
 
 export function Article({ node, ...props }: ArticleProps) {
-  console.log('Rendering Article component for node:', node.field_tags)
+  console.log("Rendering Article component for node:", node.field_tags)
   return (
     <article {...props}>
       <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>
@@ -24,7 +24,7 @@ export function Article({ node, ...props }: ArticleProps) {
       {node.field_image && (
         <figure>
           <Image
-            className='h-[400px] w-auto mx-auto my-0'
+            className="h-[400px] w-auto mx-auto my-0"
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
             height={400}
@@ -49,8 +49,13 @@ export function Article({ node, ...props }: ArticleProps) {
           <h4 className="mb-2 text-lg font-semibold">Tags:</h4>
           <ul className="flex flex-wrap gap-2">
             {node.field_tags.map((tag: any) => (
-              <li key={tag.id} className="px-3 py-1 bg-gray-100 rounded text-sm">
-                <Link href={tag.path.alias} className="hover:underline">{tag.name}</Link>
+              <li
+                key={tag.id}
+                className="px-3 py-1 bg-gray-100 rounded text-sm"
+              >
+                <Link href={tag.path.alias} className="hover:underline">
+                  {tag.name}
+                </Link>
               </li>
             ))}
           </ul>

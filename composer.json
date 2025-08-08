@@ -18,6 +18,7 @@
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.6",
+        "drupal/better_exposed_filters": "^7.0",
         "drupal/core-composer-scaffold": "^11.2",
         "drupal/core-project-message": "^11.2",
         "drupal/core-recipe-unpack": "^11.2",
@@ -34,6 +35,7 @@
         "drupal/openapi_jsonapi": "^3.0",
         "drupal/openapi_ui_redoc": "^1.0@RC",
         "drupal/openapi_ui_swagger": "^1.1",
+        "drupal/search_api_solr": "^4.3",
         "drush/drush": "^13.6",
         "mnsami/composer-custom-directory-installer": "^2.0"
     },
@@ -65,6 +67,9 @@
             "drupal/next": {
                 "#869: Fix PHP 8.4 incompatibility": "./patches/next/fix-php-8.4-incompatibility.patch"
             },
+            "drupal/search_api": {
+                "#3531256: Cannot create Search API based views On Drupal 11.2 (247)": "https://git.drupalcode.org/project/search_api/-/merge_requests/247.patch"
+            },
             "drupal/pathauto": {
                 "#3489108: Fix PHP 8.4 implicit nullable deprecation": "https://git.drupalcode.org/project/pathauto/-/merge_requests/91.patch"
             },
@@ -79,6 +84,9 @@
             },
             "drupal/openapi_jsonapi": {
                 "#3539722: PHP 8.4: Implicitly nullable parameter declarations deprecated": "https://git.drupalcode.org/project/openapi_jsonapi/-/merge_requests/20.patch"
+            },
+            "drupal/facets": {
+                "PHP 8.4: Implicitly nullable parameter declarations deprecated": "./patches/facets/fix-php-8.4-incompatibility.patch"
             }
         },
         "drupal-scaffold": {

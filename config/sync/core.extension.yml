@@ -6,6 +6,7 @@ module:
   admin_toolbar_tools: 0
   announcements_feed: 0
   automated_cron: 0
+  better_exposed_filters: 0
   big_pipe: 0
   block: 0
   block_content: 0
@@ -25,6 +26,7 @@ module:
   dynamic_page_cache: 0
   editor: 0
   facets: 0
+  facets_exposed_filters: 0
   field: 0
   field_ui: 0
   file: 0
@@ -39,6 +41,7 @@ module:
   jsonapi_search_api: 0
   jsonapi_search_api_facets: 0
   jsonapi_views: 0
+  language: 0
   link: 0
   menu_link_content: 0
   menu_ui: 0
@@ -60,6 +63,8 @@ module:
   search: 0
   search_api: 0
   search_api_db: 0
+  search_api_solr: 0
+  search_api_solr_admin: 0
   serialization: 0
   shortcut: 0
   simple_oauth: 0
@@ -72,6 +77,7 @@ module:
   update: 0
   user: 0
   views_ui: 0
+  workflows: 0
   pathauto: 1
   views: 10
   minimal: 1000

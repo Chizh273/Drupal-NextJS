@@ -30,7 +30,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <DraftAlert />
-        <div className="max-w-screen-md px-6 mx-auto">
+        <div className="px-6 mx-auto">
           <HeaderNav menu={menu} />
           <main className="container py-10 mx-auto">{children}</main>
         </div>

@@ -25,6 +25,13 @@ export function HeaderNav(props: HeaderNavProps) {
                 </Link>
               </li>
             ))}
+
+            <Link
+              href="/search-api/articles"
+              className="hover:text-blue-600 cursor-pointer"
+            >
+              [Search API] - Articles
+            </Link>
           </ul>
         </nav>
       </div>
