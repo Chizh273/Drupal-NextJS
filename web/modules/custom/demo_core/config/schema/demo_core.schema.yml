@@ -1,0 +1,2 @@
+views.style.demo_api_serializer:
+  type: views.style.data_export

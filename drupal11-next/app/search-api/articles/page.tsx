@@ -1,9 +1,8 @@
-import { DrupalNode, DrupalSearchApiJsonApiResponse } from 'next-drupal';
+import { DrupalNode, DrupalSearchApiJsonApiResponse } from "next-drupal"
 import { Metadata } from "next"
 
 import { ArticleShortTeaser } from "@/components/drupal/ArticleShortTeaser"
 import { ArticlesSearchForm } from "@/components/ArticlesSearchForm"
-import { JsonApiResourceWithFacets } from "@/types"
 import { drupal } from "@/lib/drupal"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,12 +29,13 @@ export default async function ArticleSearchApi({
       {}
     )
 
-  const index = await drupal.getSearchIndex<
-    DrupalSearchApiJsonApiResponse
-  >("articles", {
-    deserialize: false,
-    params: { include: "field_image,uid,field_tags", ...filter },
-  })
+  const index = await drupal.getSearchIndex<DrupalSearchApiJsonApiResponse>(
+    "articles",
+    {
+      deserialize: false,
+      params: { include: "field_image,uid,field_tags", ...filter },
+    }
+  )
 
   const articles = drupal.deserialize(index) as DrupalNode[]
 

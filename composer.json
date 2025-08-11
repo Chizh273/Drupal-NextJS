@@ -38,6 +38,7 @@
         "drupal/openapi_ui_swagger": "^1.1",
         "drupal/paragraphs": "^1.19",
         "drupal/search_api_solr": "^4.3",
+        "drupal/views_data_export": "^1.6",
         "drush/drush": "^13.6",
         "mnsami/composer-custom-directory-installer": "^2.0"
     },

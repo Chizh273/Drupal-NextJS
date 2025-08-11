@@ -1,0 +1,3 @@
+services:
+  demo_core.entity_normalizer:
+    class: Drupal\demo_core\Services\EntityNormalizer

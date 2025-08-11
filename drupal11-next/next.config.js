@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  rewrites: async () => ([
+  rewrites: async () => [
     {
-      source: '/',
-      destination: '/home-page',
+      source: "/",
+      destination: "/home-page",
     },
-  ]),
+  ],
   images: {
     remotePatterns: [
       {
