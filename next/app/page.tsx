@@ -1,7 +1,8 @@
-import { ArticleTeaser } from "@/components/drupal/ArticleTeaser"
-import { drupal } from "@/lib/drupal"
-import type { Metadata } from "next"
 import type { DrupalNode } from "next-drupal"
+import type { Metadata } from "next"
+
+import { ArticleTeaserList } from "@/components/nodes/teaser/ArticleTeaserList"
+import { drupal } from "@/lib/drupal"
 
 export const metadata: Metadata = {
   description: "A Next.js site powered by a Drupal backend.",
@@ -25,17 +26,9 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="mb-10 text-6xl font-black">Latest Articles.</h1>
-      {nodes?.length ? (
-        nodes.map((node) => (
-          <div key={node.id}>
-            <ArticleTeaser node={node} />
-            <hr className="my-20" />
-          </div>
-        ))
-      ) : (
-        <p className="py-4">No nodes found</p>
-      )}
+      <h1 className="mb-10 text-6xl font-black">Latest articles</h1>
+
+      <ArticleTeaserList nodes={nodes} />
     </>
   )
 }

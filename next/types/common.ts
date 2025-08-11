@@ -11,3 +11,15 @@ export type MetaTag = {
     content: string;
   }
 }
+
+export type ParamsWithSlug = {
+  slug: string[]
+}
+export type PropsWithSlug = {
+  params: Promise<ParamsWithSlug>
+}
+
+export type PropsWithSearchParams = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+

@@ -1,8 +1,10 @@
-import type { JsonApiParams } from "next-drupal"
+import type { DrupalTaxonomyTerm, JsonApiParams } from "next-drupal"
 import Image from "next/image"
 
-import { NodeFullPageProps } from "@/components/nodes/types"
+import MoreArticlesFromAuthorView from "@/components/views/articles/MoreArticlesFromAuthorView"
+import { NodeFullPageProps } from "@/components/nodes/full/types"
 import { absoluteUrl, formatDate } from "@/lib/utils"
+import { Link } from "@/components/navigation/Link"
 
 export const params: JsonApiParams = {
   include: ["field_image", "field_tags", "uid"].join(","),
@@ -41,24 +43,31 @@ export default function Article({ node, ...props }: NodeFullPageProps) {
       {node.body?.processed && (
         <div
           dangerouslySetInnerHTML={{ __html: node.body?.processed }}
-          className="mt-6 font-serif text-xl leading-loose prose"
+          className="mt-6 font-serif text-xl leading-loose prose max-w-none text-justify"
         />
       )}
       {node.field_tags?.length > 0 && (
         <div className="mt-8">
           <h4 className="mb-2 text-lg font-semibold">Tags:</h4>
           <ul className="flex flex-wrap gap-2">
-            {node.field_tags.map((tag: any) => (
+            {node.field_tags.map((tag: DrupalTaxonomyTerm) => (
               <li
                 key={tag.id}
                 className="px-3 py-1 bg-gray-100 rounded text-sm"
               >
-                {tag.name}
+                <Link href={tag.path.alias} className="hover:underline">
+                  {tag.name}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
       )}
+
+      <MoreArticlesFromAuthorView
+        authorDrupalId={node.uid?.drupal_internal__uid}
+        currentArticleNodeId={node.drupal_internal__nid}
+      />
     </article>
   )
 }

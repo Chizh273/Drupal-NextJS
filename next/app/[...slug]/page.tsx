@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { draftMode } from "next/headers"
 
 import { getEntityByPathTranslation, translatePath } from "@/lib/getEntity"
-import { resolver, RESOURCE_TYPES } from "@/components/nodes"
+import { resolver, RESOURCE_TYPES } from "@/components/nodes/full"
 import {
   ParamsWithSlug,
   prepareGenerateMetadata,

@@ -1,14 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next"
 
 import { getEntityByPath, translatePath } from "@/lib/getEntity"
-import { EntityWithMetatags } from "@/types"
-
-export type ParamsWithSlug = {
-  slug: string[]
-}
-export type PropsWithSlug = {
-  params: Promise<ParamsWithSlug>
-}
+import { EntityWithMetatags, PropsWithSlug } from "@/types"
 
 export async function prepareGenerateMetadata<T>(
   fallback: (entity: T) => Promise<Metadata>

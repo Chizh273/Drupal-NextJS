@@ -2,12 +2,14 @@ import { JsonApiParams } from "next-drupal"
 
 import ParagraphsPage, {
   params as paragraphsPageParams,
-} from "@/components/nodes/ParagraphsPage"
+} from "@/components/nodes/full/ParagraphsPage"
 import BasicPage, {
   params as basicPageParams,
-} from "@/components/nodes/BasicPage"
-import Article, { params as articleParams } from "@/components/nodes/Article"
-import { NodeFullPageProps } from "@/components/nodes/types"
+} from "@/components/nodes/full/BasicPage"
+import Article, {
+  params as articleParams,
+} from "@/components/nodes/full/Article"
+import { NodeFullPageProps } from "@/components/nodes/full/types"
 
 type MappingEntry = {
   Component: React.ComponentType<NodeFullPageProps>

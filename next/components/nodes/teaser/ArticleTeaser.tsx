@@ -1,7 +1,8 @@
-import Image from "next/image"
-import { Link } from "@/components/navigation/Link"
-import { absoluteUrl, formatDate } from "@/lib/utils"
 import type { DrupalNode } from "next-drupal"
+import Image from "next/image"
+
+import { absoluteUrl, formatDate } from "@/lib/utils"
+import { Link } from "@/components/navigation/Link"
 
 interface ArticleTeaserProps {
   node: DrupalNode
@@ -10,6 +11,18 @@ interface ArticleTeaserProps {
 export function ArticleTeaser({ node, ...props }: ArticleTeaserProps) {
   return (
     <article {...props}>
+      {node.field_image && (
+        <figure className="my-4">
+          <Image
+            className="max-h-[300px]"
+            src={absoluteUrl(node.field_image.uri.url)}
+            width={300}
+            height={300}
+            alt={node.field_image.resourceIdObjMeta.alt}
+          />
+        </figure>
+      )}
+
       <Link href={node.path.alias} className="no-underline hover:text-blue-600">
         <h2 className="mb-4 text-4xl font-bold">{node.title}</h2>
       </Link>
@@ -22,16 +35,7 @@ export function ArticleTeaser({ node, ...props }: ArticleTeaserProps) {
         ) : null}
         <span> - {formatDate(node.created)}</span>
       </div>
-      {node.field_image && (
-        <figure className="my-4">
-          <Image
-            src={absoluteUrl(node.field_image.uri.url)}
-            width={768}
-            height={480}
-            alt={node.field_image.resourceIdObjMeta.alt}
-          />
-        </figure>
-      )}
+
       <Link
         href={node.path.alias}
         className="inline-flex items-center px-6 py-2 border border-gray-600 rounded-full hover:bg-gray-100"

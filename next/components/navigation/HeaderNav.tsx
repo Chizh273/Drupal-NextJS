@@ -7,13 +7,8 @@ export function HeaderNav() {
         <Link href="/" className="text-2xl font-semibold no-underline">
           Next.js for Drupal
         </Link>
-        <Link
-          href="https://next-drupal.org/docs"
-          target="_blank"
-          rel="external"
-          className="hover:text-blue-600"
-        >
-          Read the docs
+        <Link href="/articles" className="hover:text-blue-600">
+          Articles
         </Link>
       </div>
     </header>

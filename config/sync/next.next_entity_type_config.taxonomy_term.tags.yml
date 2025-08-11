@@ -1,0 +1,13 @@
+uuid: a23a4c65-7a12-465b-b0fc-a80a7b65b8b6
+langcode: en
+status: true
+dependencies: {  }
+id: taxonomy_term.tags
+site_resolver: site_selector
+configuration:
+  sites:
+    local: local
+revalidator: path
+revalidator_configuration:
+  revalidate_page: false
+  additional_paths: ''

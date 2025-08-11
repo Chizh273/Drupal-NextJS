@@ -30,7 +30,7 @@ display:
         options:
           offset: 0
           pagination_heading_level: h4
-          items_per_page: 10
+          items_per_page: 8
           total_pages: 0
           id: 0
           tags:
@@ -306,7 +306,9 @@ display:
       query:
         type: views_query
         options: {  }
-      display_extenders: {  }
+      display_extenders:
+        jsonapi_views:
+          enabled: true
       path: taxonomy/term/%
     cache_metadata:
       max-age: -1

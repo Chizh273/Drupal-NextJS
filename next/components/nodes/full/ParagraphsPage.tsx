@@ -1,7 +1,7 @@
 import type { JsonApiParams } from "next-drupal"
 
 import { ParagraphsList } from "@/components/paragraphs/ParagraphsList"
-import { NodeFullPageProps } from "@/components/nodes/types"
+import { NodeFullPageProps } from "@/components/nodes/full/types"
 
 export const params: JsonApiParams = {
   include: [

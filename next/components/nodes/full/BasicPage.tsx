@@ -1,4 +1,4 @@
-import { NodeFullPageProps } from "@/components/nodes/types"
+import { NodeFullPageProps } from "@/components/nodes/full/types"
 
 export const params = {}
 
@@ -9,7 +9,7 @@ export default function BasicPage({ node, ...props }: NodeFullPageProps) {
       {node.body?.processed && (
         <div
           dangerouslySetInnerHTML={{ __html: node.body?.processed }}
-          className="mt-6 font-serif text-xl leading-loose prose"
+          className="mt-6 font-serif text-xl leading-loose"
         />
       )}
     </article>
