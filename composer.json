@@ -25,7 +25,9 @@
         "drupal/devel": "^5.4",
         "drupal/gin": "^5.0",
         "drupal/gin_toolbar": "^3.0",
+        "drupal/metatag": "^2.1",
         "drupal/next": "^2.0",
+        "drupal/paragraphs": "^1.19",
         "drush/drush": "^13.6"
     },
     "conflict": {

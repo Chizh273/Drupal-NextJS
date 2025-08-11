@@ -1,0 +1,23 @@
+uuid: ff7f787b-55ba-4360-ae31-a6d2ca7ee1a9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: basic_paragraphs_pages
+label: 'Basic & Paragraphs Pages'
+type: 'canonical_entities:node'
+pattern: '[node:title]'
+selection_criteria:
+  f405a2cf-4872-42d8-ad32-a9bde0c610d7:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: f405a2cf-4872-42d8-ad32-a9bde0c610d7
+    context_mapping:
+      node: node
+    bundles:
+      page: page
+      paragraphs_page: paragraphs_page
+selection_logic: and
+weight: -5
+relationships: {  }

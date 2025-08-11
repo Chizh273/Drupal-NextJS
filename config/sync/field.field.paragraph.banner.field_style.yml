@@ -1,0 +1,21 @@
+uuid: b8b3f8e9-0bef-4389-a9a0-a36b9fba605b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_style
+    - paragraphs.paragraphs_type.banner
+  module:
+    - options
+id: paragraph.banner.field_style
+field_name: field_style
+entity_type: paragraph
+bundle: banner
+label: Style
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
