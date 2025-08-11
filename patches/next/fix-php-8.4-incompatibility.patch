@@ -1,0 +1,79 @@
+From 21d560dc4ff851395a5752d5676aeeaa74cc81fe Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Arne=20J=C3=B8rgensen?= <arne@arnested.dk>
+Date: Tue, 29 Jul 2025 12:46:52 +0200
+Subject: [PATCH] Fix PHP 8.4 incompatibility
+
+The module throws some warnings about "Implicitly marking a parameter as nullable is deprecated since PHP 8.4."
+---
+ .../next_jwt/src/Plugin/Next/PreviewUrlGenerator/Jwt.php        | 2 +-
+/next/src/Form/IframeSitePreviewerSwitcherForm.php       | 2 +-
+/next/src/Form/NextEntityTypeConfigForm.php              | 2 +-
+ .../next/src/Plugin/Next/PreviewUrlGenerator/SimpleOauth.php    | 2 +-
+/next/src/Plugin/PreviewUrlGeneratorInterface.php        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/next/modules/next_jwt/src/Plugin/Next/PreviewUrlGenerator/Jwt.php b/next/modules/next_jwt/src/Plugin/Next/PreviewUrlGenerator/Jwt.php
+index 93f65b65e..5ca421504 100644
+--- a/next/modules/next_jwt/src/Plugin/Next/PreviewUrlGenerator/Jwt.php
++++ b/next/modules/next_jwt/src/Plugin/Next/PreviewUrlGenerator/Jwt.php
+@@ -132,7 +132,7 @@ public function submitConfigurationForm(array &$form, FormStateInterface $form_s
+   /**
+    * {@inheritdoc}
+    */
+-  public function generate(NextSiteInterface $next_site, EntityInterface $entity, string $resource_version = NULL): ?Url {
++  public function generate(NextSiteInterface $next_site, EntityInterface $entity, ?string $resource_version = NULL): ?Url {
+     $query = [];
+     $query['path'] = $path = $entity->toUrl()->toString();
+     $query['uuid'] = $this->user->uuid();
+diff --git a/next/src/Form/IframeSitePreviewerSwitcherForm.php b/next/src/Form/IframeSitePreviewerSwitcherForm.php
+index 4d1345599..73cf07050 100644
+--- a/next/src/Form/IframeSitePreviewerSwitcherForm.php
++++ b/next/src/Form/IframeSitePreviewerSwitcherForm.php
+@@ -47,7 +47,7 @@ public function getFormId() {
+   /**
+    * {@inheritdoc}
+    */
+-  public function buildForm(array $form, FormStateInterface $form_state, EntityInterface $entity = NULL, array $sites = [], string $site_id = NULL) {
++  public function buildForm(array $form, FormStateInterface $form_state, ?EntityInterface $entity = NULL, array $sites = [], ?string $site_id = NULL) {
+     /** @var \Drupal\next\Entity\NextSiteInterface[] $sites */
+     $site_options = [];
+     foreach ($sites as $site) {
+diff --git a/next/src/Form/NextEntityTypeConfigForm.php b/next/src/Form/NextEntityTypeConfigForm.php
+index 37d2e65be..5a1e8d9aa 100644
+--- a/next/src/Form/NextEntityTypeConfigForm.php
++++ b/next/src/Form/NextEntityTypeConfigForm.php
+@@ -60,7 +60,7 @@ class NextEntityTypeConfigForm extends EntityForm {
+    * @param \Drupal\next\Plugin\RevalidatorManagerInterface $revalidator_manager
+    *   The revalidator manager.
+    */
+-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, SiteResolverManagerInterface $site_resolver_manager, RevalidatorManagerInterface $revalidator_manager = NULL) {
++  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, SiteResolverManagerInterface $site_resolver_manager, ?RevalidatorManagerInterface $revalidator_manager = NULL) {
+     if (!$revalidator_manager) {
+       @trigger_error('Calling NextEntityTypeConfigForm::__construct() without the $revalidator_manager argument is deprecated in next:1.4.0 and will be required in next:2.0.0. See https://www.drupal.org/node/3325622', E_USER_DEPRECATED);
+       // @codingStandardsIgnoreStart
+diff --git a/next/src/Plugin/Next/PreviewUrlGenerator/SimpleOauth.php b/next/src/Plugin/Next/PreviewUrlGenerator/SimpleOauth.php
+index 1ec530724..559b67988 100644
+--- a/next/src/Plugin/Next/PreviewUrlGenerator/SimpleOauth.php
++++ b/next/src/Plugin/Next/PreviewUrlGenerator/SimpleOauth.php
+@@ -124,7 +124,7 @@ public function submitConfigurationForm(array &$form, FormStateInterface $form_s
+   /**
+    * {@inheritdoc}
+    */
+-  public function generate(NextSiteInterface $next_site, EntityInterface $entity, string $resource_version = NULL): ?Url {
++  public function generate(NextSiteInterface $next_site, EntityInterface $entity, ?string $resource_version = NULL): ?Url {
+     $query = [];
+     $query['path'] = $path = $entity->toUrl()->toString();
+
+diff --git a/next/src/Plugin/PreviewUrlGeneratorInterface.php b/next/src/Plugin/PreviewUrlGeneratorInterface.php
+index a5d511cce..33e213509 100644
+--- a/next/src/Plugin/PreviewUrlGeneratorInterface.php
++++ b/next/src/Plugin/PreviewUrlGeneratorInterface.php
+@@ -49,7 +49,7 @@ public function getDescription(): string;
+    * @return \Drupal\Core\Url|null
+    *   The generated preview url.
+    */
+-  public function generate(NextSiteInterface $next_site, EntityInterface $entity, string $resource_version = NULL): ?Url;
++  public function generate(NextSiteInterface $next_site, EntityInterface $entity, ?string $resource_version = NULL): ?Url;
+
+   /**
+    * Validates the preview url.
