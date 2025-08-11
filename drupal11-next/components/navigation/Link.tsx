@@ -1,7 +1,7 @@
-import { forwardRef } from "react"
-import NextLink from "next/link"
 import type { AnchorHTMLAttributes, ReactNode } from "react"
 import type { LinkProps as NextLinkProps } from "next/link"
+import { forwardRef } from "react"
+import NextLink from "next/link"
 
 type LinkProps = NextLinkProps &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof NextLinkProps> & {

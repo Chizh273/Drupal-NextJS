@@ -1,0 +1,13 @@
+uuid: c812c301-01cb-4528-b84b-66bee0e27577
+langcode: en
+status: true
+dependencies: {  }
+id: node.paragraphs_page
+site_resolver: site_selector
+configuration:
+  sites:
+    local: local
+revalidator: path
+revalidator_configuration:
+  revalidate_page: false
+  additional_paths: ''

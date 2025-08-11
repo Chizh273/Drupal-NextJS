@@ -25,6 +25,7 @@ module:
   devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
+  entity_reference_revisions: 0
   facets: 0
   facets_exposed_filters: 0
   field: 0
@@ -42,9 +43,14 @@ module:
   jsonapi_search_api_facets: 0
   jsonapi_views: 0
   language: 0
+  layout_builder: 0
+  layout_discovery: 0
   link: 0
+  media: 0
+  media_library: 0
   menu_link_content: 0
   menu_ui: 0
+  metatag: 0
   mysql: 0
   next: 0
   next_jsonapi: 0
@@ -80,6 +86,7 @@ module:
   workflows: 0
   pathauto: 1
   views: 10
+  paragraphs: 11
   minimal: 1000
 theme:
   olivero: 0

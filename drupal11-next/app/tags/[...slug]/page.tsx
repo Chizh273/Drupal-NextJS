@@ -1,54 +1,46 @@
-import { drupal } from '@/lib/drupal';
-import { DrupalNode, DrupalTaxonomyTerm } from 'next-drupal';
-import { Metadata, ResolvingMetadata } from 'next';
-import { getEntityByPath } from '@/lib/getEntity';
-import { notFound } from 'next/navigation';
-import { ArticleTeaserList } from '@/components/drupal/ArticleTeaserList';
+import { DrupalNode, DrupalTaxonomyTerm } from "next-drupal"
+import { notFound } from "next/navigation"
 
-interface TagPageProps {
-  params: Promise<{ slug: string[] }>;
-}
+import { ArticleTeaserList } from "@/components/drupal/ArticleTeaserList"
+import { prepareGenerateMetadata, PropsWithSlug } from "@/lib/metatags"
+import { getEntityByPath } from "@/lib/getEntity"
+import { drupal } from "@/lib/drupal"
 
-export async function generateMetadata(
-  props: TagPageProps,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
-  return props.params
-    .then(({ slug }) =>
-      getEntityByPath<DrupalTaxonomyTerm>(`/tags/${slug.join('/')}`),
-    )
-    .then((term) => ({ title: `[Views] - ${term.name}` }))
-    .catch(() => ({}));
-}
+export const generateMetadata = prepareGenerateMetadata<DrupalTaxonomyTerm>(
+  async ({ name }) => ({
+    title: `Tag - ${name}`,
+    description: `Articles tagged with ${name}`,
+  })
+)
 
-export default async function TagPage(props: TagPageProps) {
-  const slug = (await props.params)?.slug;
+export default async function TagPage(props: PropsWithSlug) {
+  const slug = (await props.params)?.slug
 
   // Try to get the term by its path.
-  let term;
+  let term
   try {
     term = await getEntityByPath<
       DrupalTaxonomyTerm & { description: { processed: string } }
-    >(`/tags/${slug.join('/')}`);
+    >(`/tags/${slug.join("/")}`)
   } catch (e) {
-    notFound();
+    notFound()
   }
 
   // Try to get the articles for the term.
-  let articles: DrupalNode[] = [];
+  let articles: DrupalNode[] = []
   try {
     const response = await drupal.getView<DrupalNode[]>(
-      'taxonomy_term--page_1',
+      "taxonomy_term--page_1",
       {
         params: {
-          'views-argument': [term.drupal_internal__tid],
-          include: 'field_image,uid',
+          "views-argument": [term.drupal_internal__tid],
+          include: "field_image,uid",
         },
-      },
-    );
-    articles = response.results;
+      }
+    )
+    articles = response.results
   } catch (e) {
-    console.error('Error fetching articles:', e);
+    console.error("Error fetching articles:", e)
   }
 
   return (
@@ -62,7 +54,7 @@ export default async function TagPage(props: TagPageProps) {
         />
       )}
 
-      <ArticleTeaserList nodes={articles}/>
+      <ArticleTeaserList nodes={articles} />
     </main>
-  );
+  )
 }

@@ -1,0 +1,23 @@
+uuid: c418c66e-4f1c-4a74-a945-c5ee8b979332
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cta
+    - paragraphs.paragraphs_type.banner
+  module:
+    - link
+id: paragraph.banner.field_cta
+field_name: field_cta
+entity_type: paragraph
+bundle: banner
+label: CTA
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 1
+field_type: link

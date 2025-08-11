@@ -1,10 +1,11 @@
-import { DraftAlert } from "@/components/misc/DraftAlert"
-import { HeaderNav } from "@/components/navigation/HeaderNav"
-import type { Metadata } from "next"
 import type { ReactNode } from "react"
+import type { Metadata } from "next"
+
+import { HeaderNav } from "@/components/navigation/HeaderNav"
+import { DraftAlert } from "@/components/misc/DraftAlert"
+import { drupal } from "@/lib/drupal"
 
 import "@/styles/globals.css"
-import { drupal } from "@/lib/drupal"
 
 export const metadata: Metadata = {
   title: {

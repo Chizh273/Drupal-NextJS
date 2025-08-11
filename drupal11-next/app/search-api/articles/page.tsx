@@ -1,14 +1,15 @@
-import { ArticleShortTeaser } from '@/components/drupal/ArticleShortTeaser';
-import { ArticlesSearchForm } from '@/components/ArticlesSearchForm';
-import { DrupalNode } from 'next-drupal';
-import { JsonApiResourceWithFacets } from '@/types';
-import { Metadata } from 'next';
-import { drupal } from '@/lib/drupal';
+import { DrupalNode, DrupalSearchApiJsonApiResponse } from 'next-drupal';
+import { Metadata } from "next"
+
+import { ArticleShortTeaser } from "@/components/drupal/ArticleShortTeaser"
+import { ArticlesSearchForm } from "@/components/ArticlesSearchForm"
+import { JsonApiResourceWithFacets } from "@/types"
+import { drupal } from "@/lib/drupal"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: '[Search API] Articles',
-  };
+    title: "[Search API] Articles",
+  }
 }
 
 type ArticleSearchApiProps = {
@@ -18,24 +19,25 @@ type ArticleSearchApiProps = {
 export default async function ArticleSearchApi({
   searchParams,
 }: ArticleSearchApiProps) {
-  const params = await searchParams;
+  const params = await searchParams
   const filter = Object.keys(params)
-    .filter(key => key.startsWith('filter['))
-    .reduce((acc, key) => ({
-      ...acc,
-      [key]: Array.isArray(params[key]) ? params[key].join(',') : params[key],
-    }), {});
+    .filter((key) => key.startsWith("filter["))
+    .reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: Array.isArray(params[key]) ? params[key].join(",") : params[key],
+      }),
+      {}
+    )
 
   const index = await drupal.getSearchIndex<
-    JsonApiResourceWithFacets<DrupalNode>
-  >('articles', {
+    DrupalSearchApiJsonApiResponse
+  >("articles", {
     deserialize: false,
-    params: { include: 'field_image,uid,field_tags', ...filter },
-  });
+    params: { include: "field_image,uid,field_tags", ...filter },
+  })
 
-  const articles = drupal.deserialize(index) as DrupalNode[];
-
-  console.log(articles);
+  const articles = drupal.deserialize(index) as DrupalNode[]
 
   return (
     <main className="p-8">
@@ -52,10 +54,10 @@ export default async function ArticleSearchApi({
         </div>
         <div className="w-3/4 flex flex-col gap-6">
           {articles.map((node) => (
-            <ArticleShortTeaser key={node.id} node={node}/>
+            <ArticleShortTeaser key={node.id} node={node} />
           ))}
         </div>
       </div>
     </main>
-  );
+  )
 }

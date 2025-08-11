@@ -1,8 +1,8 @@
-import type { DrupalNode } from 'next-drupal';
-import { ArticleTeaser } from '@/components/drupal/ArticleTeaser';
+import type { DrupalNode } from "next-drupal"
+import { ArticleTeaser } from "@/components/drupal/ArticleTeaser"
 
 interface ArticleTeaserListProps {
-  nodes: DrupalNode[];
+  nodes: DrupalNode[]
 }
 
 export function ArticleTeaserList({ nodes }: ArticleTeaserListProps) {
@@ -18,5 +18,5 @@ export function ArticleTeaserList({ nodes }: ArticleTeaserListProps) {
         <p className="py-4">No nodes found</p>
       )}
     </div>
-  );
+  )
 }

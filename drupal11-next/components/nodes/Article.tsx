@@ -1,14 +1,15 @@
+import type { JsonApiParams } from "next-drupal"
 import Image from "next/image"
-import { absoluteUrl, formatDate } from "@/lib/utils"
-import type { DrupalNode } from "next-drupal"
 import Link from "next/link"
 
-interface ArticleProps {
-  node: DrupalNode
+import { NodeFullPageProps } from "@/components/nodes/types"
+import { absoluteUrl, formatDate } from "@/lib/utils"
+
+export const params: JsonApiParams = {
+  include: ["field_image", "field_tags", "uid"].join(","),
 }
 
-export function Article({ node, ...props }: ArticleProps) {
-  console.log("Rendering Article component for node:", node.field_tags)
+export default function Article({ node, ...props }: NodeFullPageProps) {
   return (
     <article {...props}>
       <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>

@@ -12,4 +12,5 @@ export const drupal = new NextDrupal(baseUrl, {
   },
   withAuth: true,
   debug: true,
+  frontPage: '/home-page'
 })

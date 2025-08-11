@@ -1,43 +1,50 @@
 "use client"
 
-import React, { FormEvent, useCallback } from 'react';
-import { FacetFilter } from "@/types"
-import { useRouter } from 'next/navigation';
+import React, { FormEvent, useCallback } from "react"
+import { DrupalSearchApiFacet } from "next-drupal"
+import { useRouter } from "next/navigation"
 
 interface ArticlesSearchFormProps {
-  facets: FacetFilter[],
+  facets: DrupalSearchApiFacet[]
   defaultValues?: Record<string, string | string[]>
 }
 
 export function ArticlesSearchForm({
-  facets, defaultValues
+  facets,
+  defaultValues,
 }: ArticlesSearchFormProps) {
-  const formRef = React.useRef<HTMLFormElement>(null);
-  const router = useRouter();
+  const formRef = React.useRef<HTMLFormElement>(null)
+  const router = useRouter()
 
-  const handleSubmit = useCallback((e: FormEvent) => {
-    e.preventDefault()
-    const formData = new FormData(formRef.current as HTMLFormElement);
-    const fulltext = formData.get("fulltext") as string
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault()
+      const formData = new FormData(formRef.current as HTMLFormElement)
+      const fulltext = formData.get("fulltext") as string
 
-    const filters = facets.reduce((acc, facet) => ({
-      ...acc,
-      [facet.id]: formData.getAll(facet.id).map(String),
-    }), {} as Record<string, string | string[]>);
+      const filters = facets.reduce(
+        (acc, facet) => ({
+          ...acc,
+          [facet.id]: formData.getAll(facet.id).map(String),
+        }),
+        {} as Record<string, string | string[]>
+      )
 
-    // Build query string
-    const params = new URLSearchParams();
-    if (fulltext) params.set("filter[fulltext]", fulltext);
-    Object.entries(filters).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach(v => params.append(`filter[${key}]`, v));
-      } else if (value) {
-        params.set(`filter[${key}]`, value);
-      }
-    });
+      // Build query string
+      const params = new URLSearchParams()
+      if (fulltext) params.set("filter[fulltext]", fulltext)
+      Object.entries(filters).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => params.append(`filter[${key}]`, v))
+        } else if (value) {
+          params.set(`filter[${key}]`, value)
+        }
+      })
 
-    router.push(`?${params.toString()}`);
-  }, [facets, router, formRef]);
+      router.push(`?${params.toString()}`)
+    },
+    [facets, router, formRef]
+  )
 
   return (
     <form
@@ -55,7 +62,7 @@ export function ArticlesSearchForm({
           type="text"
           className="w-full border px-3 py-2 rounded"
           placeholder="Search articles..."
-          defaultValue={defaultValues?.['filter[fulltext]'] || ''}
+          defaultValue={defaultValues?.["filter[fulltext]"] || ""}
         />
       </div>
 
@@ -63,13 +70,20 @@ export function ArticlesSearchForm({
         <div key={facet.id} className="mb-4">
           <div className="font-semibold mb-2">{facet.label}</div>
           <div className="flex flex-wrap gap-4">
-            {facet.terms.map((term) => (
-              <label key={term.values.value} className="flex items-center gap-2">
+            {facet?.terms?.map((term) => (
+              <label
+                key={term.values.value}
+                className="flex items-center gap-2"
+              >
                 <input
                   type="checkbox"
                   name={facet.id}
                   value={term.values.value}
-                  defaultChecked={defaultValues?.[`filter[${facet.id}]`]?.includes(term.values.value) || false}
+                  defaultChecked={
+                    defaultValues?.[`filter[${facet.id}]`]?.includes(
+                      term.values.value
+                    ) || false
+                  }
                 />
                 {term.values.label} ({term.values.count})
               </label>

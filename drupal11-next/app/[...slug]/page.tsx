@@ -1,78 +1,57 @@
-import { draftMode } from "next/headers"
-import { notFound } from "next/navigation"
-import { Article } from "@/components/drupal/Article"
-import { BasicPage } from "@/components/drupal/BasicPage"
-import { drupal } from "@/lib/drupal"
-import type { Metadata, ResolvingMetadata } from "next"
 import type { DrupalNode } from "next-drupal"
-import { getEntityByPath } from "@/lib/getEntity"
+import { notFound } from "next/navigation"
+import { draftMode } from "next/headers"
 
-type NodePageParams = {
-  slug: string[]
-}
-type NodePageProps = {
-  params: Promise<NodePageParams>
+import { getEntityByPathTranslation, translatePath } from "@/lib/getEntity"
+import { resolver, RESOURCE_TYPES } from "@/components/nodes"
+import {
+  ParamsWithSlug,
+  prepareGenerateMetadata,
+  PropsWithSlug,
+} from "@/lib/metatags"
+import { drupal } from "@/lib/drupal"
+
+type NodePageProps = PropsWithSlug & {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata(
-  props: NodePageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const params = await props.params
+export const generateMetadata = prepareGenerateMetadata<DrupalNode>(
+  async ({ title }) => ({ title })
+)
 
-  const { slug } = params
-
-  let node
-  try {
-    node = await getEntityByPath<DrupalNode>(`/${slug.join("/")}`)
-  } catch (e) {
-    // If we fail to fetch the node, don't return any metadata.
-    return {}
-  }
-
-  return {
-    title: node.title,
-  }
-}
-
-const RESOURCE_TYPES = ["node--page", "node--article"]
-
-export async function generateStaticParams(): Promise<NodePageParams[]> {
-  const resources =
-    await drupal.getResourceCollectionPathSegments(RESOURCE_TYPES)
-  return resources.map((resource) => {
-    return {
-      slug: resource.segments,
-    }
-  })
+export async function generateStaticParams(): Promise<ParamsWithSlug[]> {
+  return drupal
+    .getResourceCollectionPathSegments(RESOURCE_TYPES)
+    .then((resources) =>
+      resources.map((resource) => ({ slug: resource.segments }))
+    )
 }
 
 export default async function NodePage(props: NodePageProps) {
-  const params = await props.params
-
-  const { slug } = params
+  const { slug } = await props.params
 
   const draft = await draftMode()
   const isDraftMode = draft.isEnabled
 
-  let node
   try {
-    node = await getEntityByPath<DrupalNode>(`/${slug.join("/")}`)
-  } catch (error) {
-    // If getNode throws an error, tell Next.js the path is 404.
+    const path = `/${slug.join("/")}`
+    const pathTranslation = await translatePath(path)
+    const { Component, params } = resolver(
+      pathTranslation.jsonapi?.resourceName as string
+    )
+    const node = await getEntityByPathTranslation<DrupalNode>(
+      path,
+      pathTranslation,
+      params
+    )
+
+    if (!isDraftMode && node?.status === false) {
+      notFound()
+    }
+
+    return <Component node={node} />
+  } catch (e) {
+    // If translatePath throws an error, tell Next.js the path is 404.
     notFound()
   }
-
-  // If we're not in draft mode and the resource is not published, return a 404.
-  if (!isDraftMode && node?.status === false) {
-    notFound()
-  }
-
-  return (
-    <>
-      {node.type === "node--page" && <BasicPage node={node} />}
-      {node.type === "node--article" && <Article node={node} />}
-    </>
-  )
 }
