@@ -32,7 +32,9 @@
         "drupal/metatag": "^2.1",
         "drupal/next": "^2.0",
         "drupal/paragraphs": "^1.19",
+        "drupal/restui": "^1.22",
         "drupal/search_api_solr": "^4.3",
+        "drupal/webform_rest": "^4.2",
         "drush/drush": "^13.6"
     },
     "conflict": {

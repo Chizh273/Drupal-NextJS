@@ -44,6 +44,15 @@ export function HeaderNav(props: HeaderNavProps) {
                 Search API
               </Link>
             </li>
+
+            <li className="list-none">
+              <Link
+                href="/webform"
+                className="hover:text-blue-600 cursor-pointer"
+              >
+                Webform
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
