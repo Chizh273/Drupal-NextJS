@@ -23,19 +23,22 @@
         "drupal/core-recipe-unpack": "^11.2",
         "drupal/core-recommended": "^11.2",
         "drupal/devel": "^5.4",
+        "drupal/facets": "^3",
         "drupal/gin": "^5.0",
         "drupal/gin_toolbar": "^3.0",
         "drupal/jsonapi_menu_items": "^1.2",
+        "drupal/jsonapi_search_api": "^1.0@RC",
         "drupal/jsonapi_views": "^1.1",
         "drupal/metatag": "^2.1",
         "drupal/next": "^2.0",
         "drupal/paragraphs": "^1.19",
+        "drupal/search_api_solr": "^4.3",
         "drush/drush": "^13.6"
     },
     "conflict": {
         "drupal/drupal": "*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "allow-plugins": {
@@ -67,6 +70,9 @@
             },
             "drupal/subrequests": {
                 "#3524429: Fix for implicit nullable deprecation": "https://git.drupalcode.org/project/subrequests/-/merge_requests/33.patch"
+            },
+            "drupal/facets": {
+                "PHP 8.4: Implicitly nullable parameter declarations deprecated": "./patches/facets/fix-php-8.4-incompatibility.patch"
             }
         },
         "drupal-scaffold": {

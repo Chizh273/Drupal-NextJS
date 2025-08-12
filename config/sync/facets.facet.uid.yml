@@ -1,0 +1,69 @@
+uuid: 5ed13b3e-4c29-4280-bb3b-fdf105b4a1de
+langcode: en
+status: true
+dependencies:
+  module:
+    - jsonapi_search_api_facets
+id: uid
+name: Author
+weight: 0
+min_count: 1
+missing: false
+missing_label: others
+url_alias: author
+facet_source_id: 'jsonapi_search_api_facets:articles'
+field_identifier: uid
+query_operator: or
+hard_limit: 0
+exclude: false
+use_hierarchy: false
+keep_hierarchy_parents_active: false
+hierarchy:
+  type: taxonomy
+  config: {  }
+expand_hierarchy: false
+enable_parent_when_child_gets_disabled: true
+widget:
+  type: jsonapi_search_api
+  config:
+    show_numbers: true
+empty_behavior:
+  behavior: none
+only_visible_when_facet_source_is_visible: true
+show_only_one_result: false
+show_title: false
+processor_configs:
+  active_widget_order:
+    processor_id: active_widget_order
+    weights:
+      sort: 20
+    settings:
+      sort: DESC
+  count_widget_order:
+    processor_id: count_widget_order
+    weights:
+      sort: 30
+    settings:
+      sort: DESC
+  display_value_widget_order:
+    processor_id: display_value_widget_order
+    weights:
+      sort: 40
+    settings:
+      sort: ASC
+  hierarchy_processor:
+    processor_id: hierarchy_processor
+    weights:
+      build: 100
+    settings: {  }
+  uid_to_username_callback:
+    processor_id: uid_to_username_callback
+    weights:
+      build: 5
+    settings: {  }
+  url_processor_handler:
+    processor_id: url_processor_handler
+    weights:
+      pre_query: 50
+      build: 15
+    settings: {  }

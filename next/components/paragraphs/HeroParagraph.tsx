@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { Link } from '@/components/navigation/Link'
+import { Link } from "@/components/navigation/Link"
 import { DrupalHeroParagraph } from "@/types"
 import { absoluteUrl } from "@/lib/utils"
 

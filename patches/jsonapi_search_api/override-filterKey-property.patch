@@ -1,0 +1,62 @@
+diff --git a/modules/jsonapi_search_api_facets/src/Plugin/facets/url_processor/JsonApiQueryString.php b/modules/jsonapi_search_api_facets/src/Plugin/facets/url_processor/JsonApiQueryString.php
+index bfe01f3..036739f 100644
+--- a/modules/jsonapi_search_api_facets/src/Plugin/facets/url_processor/JsonApiQueryString.php
++++ b/modules/jsonapi_search_api_facets/src/Plugin/facets/url_processor/JsonApiQueryString.php
+@@ -2,11 +2,15 @@
+ 
+ namespace Drupal\jsonapi_search_api_facets\Plugin\facets\url_processor;
+ 
++use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\facets\FacetInterface;
+ use Drupal\facets\Plugin\facets\url_processor\QueryString;
++use Drupal\facets\Utility\FacetsUrlGenerator;
+ use Drupal\jsonapi\Query\Filter;
+ use Drupal\jsonapi\Query\OffsetPage;
+ use Drupal\jsonapi_search_api_facets\Plugin\facets\facet_source\JsonApiFacets;
++use Symfony\Component\EventDispatcher\EventDispatcherInterface;
++use Symfony\Component\HttpFoundation\Request;
+ 
+ /**
+  * Query string URL processor.
+@@ -19,14 +23,6 @@ use Drupal\jsonapi_search_api_facets\Plugin\facets\facet_source\JsonApiFacets;
+  */
+ class JsonApiQueryString extends QueryString {
+ 
+-  /**
+-   * The query string variable.
+-   *
+-   * @var string
+-   *   The query string variable that holds all the facet information.
+-   */
+-  protected $filterKey = Filter::KEY_NAME;
+-
+   /**
+    * An array of the existing non-facet filters.
+    *
+@@ -35,6 +31,15 @@ class JsonApiQueryString extends QueryString {
+    */
+   protected $originalFilters = [];
+ 
++  /**
++   * {@inheritDoc}
++   */
++  public function __construct(array $configuration, $plugin_id, $plugin_definition, Request $request, EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $eventDispatcher, FacetsUrlGenerator $urlGenerator) {
++    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $entity_type_manager, $eventDispatcher, $urlGenerator);
++
++    $this->filterKey = Filter::KEY_NAME;
++  }
++
+   /**
+    * {@inheritDoc}
+    */
+@@ -43,8 +48,8 @@ class JsonApiQueryString extends QueryString {
+ 
+     // Get the active facet parameters.
+     // @todo can we leverage \Drupal\jsonapi_search_api\Query\Filter
+-    if ($url_parameters->has($this->filterKey)) {
+-      $active_params = $url_parameters->all($this->filterKey);
++    if ($url_parameters->has(Filter::KEY_NAME)) {
++      $active_params = $url_parameters->all(Filter::KEY_NAME);
+     }
+     $facet_source_id = $this->configuration['facet']->getFacetSourceId();
+ 

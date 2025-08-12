@@ -6,7 +6,12 @@ interface PagerProps {
   total_count: number
   elements_per_page: number
   current_page: number
-  param_key: string
+  param_key?: string
+  prepareSearchParams?: (
+    params: URLSearchParams,
+    currentPage: number,
+    elementsPerPage: number
+  ) => URLSearchParams
 }
 
 export const Pager = ({
@@ -14,6 +19,7 @@ export const Pager = ({
   elements_per_page,
   current_page,
   param_key,
+  prepareSearchParams,
 }: PagerProps) => {
   const router = useRouter()
   const totalPages = Math.ceil(total_count / elements_per_page)
@@ -22,9 +28,13 @@ export const Pager = ({
 
   const handlePageChange = (page: number) => {
     if (page < 0 || page >= totalPages) return
-    const url = new URL(window.location.href)
-    const params = url.searchParams
-    params.set(param_key, page.toString())
+    let params = new URLSearchParams(window.location.search)
+
+    if (param_key) {
+      params.set(param_key, page.toString())
+    } else if (prepareSearchParams) {
+      params = prepareSearchParams(params, page, elements_per_page)
+    }
     router.push(`?${params.toString()}`)
   }
 
