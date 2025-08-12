@@ -43,8 +43,6 @@ export default async function ArticleSearchApi({
 
   const articles = drupal.deserialize(index) as DrupalNode[]
 
-  console.log(index.meta, params)
-
   return (
     <main className="p-8">
       <h1 className="mb-10 text-6xl font-black">Articles search</h1>

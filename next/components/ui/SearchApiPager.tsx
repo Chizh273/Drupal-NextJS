@@ -15,6 +15,7 @@ export const SearchApiPager = ({
   current_offset,
   param_key,
 }: PagerProps) => {
+  const router = useRouter()
   const totalPages = Math.ceil(total_count / elements_per_page)
   if (totalPages <= 1) return null
 
@@ -23,7 +24,6 @@ export const SearchApiPager = ({
       ? 0
       : Math.floor(Number(current_offset) / elements_per_page)
   const pages = Array.from({ length: totalPages }, (_, i) => i)
-  const router = useRouter()
 
   const handlePageChange = (page: number) => {
     if (page < 0 || page >= totalPages) return

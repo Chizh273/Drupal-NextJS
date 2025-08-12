@@ -31,8 +31,6 @@ export default function ContactPage() {
     if (!response.ok) {
       setFormState("error")
     }
-
-    console.log(await response.json())
   }
 
   return (

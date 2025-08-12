@@ -22,6 +22,7 @@ export default async function TagPage(props: TagsPageProps) {
   const term = await getEntityByPath<
     DrupalTaxonomyTerm & { description: { processed: string } }
   >(`/tags/${params.slug.join("/")}`)
+
   const view = await drupal.getView<DrupalNode[]>("taxonomy_term--page_1", {
     params: {
       "views-argument": [term.drupal_internal__tid],

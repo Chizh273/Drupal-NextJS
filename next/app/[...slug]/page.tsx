@@ -4,11 +4,8 @@ import { draftMode } from "next/headers"
 
 import { getEntityByPathTranslation, translatePath } from "@/lib/getEntity"
 import { resolver, RESOURCE_TYPES } from "@/components/nodes/full"
-import {
-  ParamsWithSlug,
-  prepareGenerateMetadata,
-  PropsWithSlug,
-} from "@/lib/metatags"
+import { prepareGenerateMetadata } from "@/lib/metatags"
+import {ParamsWithSlug, PropsWithSlug} from '@/types';
 import { drupal } from "@/lib/drupal"
 
 type NodePageProps = PropsWithSlug & {

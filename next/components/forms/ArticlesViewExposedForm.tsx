@@ -27,7 +27,7 @@ export function ArticlesViewExposedForm(props: ArticlesViewExposedFormProps) {
 
       router.push(`?${urlSearchParams.toString()}`)
     },
-    [termsFieldRef]
+    [termsFieldRef, router]
   )
 
   return (
