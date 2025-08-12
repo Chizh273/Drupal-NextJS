@@ -5,10 +5,11 @@ import { drupal } from "@/lib/drupal"
 
 type MoreFromAuthorViewProps = {
   authorDrupalId: string
-  currentArticleNodeId: number|string
+  currentArticleNodeId: number | string
 }
 export default async function MoreArticlesFromAuthorView({
-  authorDrupalId, currentArticleNodeId
+  authorDrupalId,
+  currentArticleNodeId,
 }: MoreFromAuthorViewProps) {
   const view = await drupal.getView<DrupalNode[]>(
     "articles--more_from_author",

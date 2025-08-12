@@ -25,6 +25,7 @@
         "drupal/devel": "^5.4",
         "drupal/gin": "^5.0",
         "drupal/gin_toolbar": "^3.0",
+        "drupal/jsonapi_menu_items": "^1.2",
         "drupal/jsonapi_views": "^1.1",
         "drupal/metatag": "^2.1",
         "drupal/next": "^2.0",
@@ -52,6 +53,9 @@
     },
     "extra": {
         "patches": {
+            "drupal/core": {
+                "#3066751: `link` fields in REST, JSON:API and GraphQL cannot be rendered by client": "./patches/core/3066751-link-fields-in-rest-json-api-and-graph-ql-cannot-be-rendered-by-client.diff"
+            },
             "drupal/decoupled_router": {
                 "Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2024-08-05/decouple_router-3111456-resolve-language-issue-63--get-translation-re-rolled-and-good-redirect.patch"
             },

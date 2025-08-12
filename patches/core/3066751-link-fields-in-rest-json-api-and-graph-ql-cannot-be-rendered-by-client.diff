@@ -1,0 +1,171 @@
+diff --git a/core/modules/link/src/Plugin/DataType/LinkUrlComputed.php b/core/modules/link/src/Plugin/DataType/LinkUrlComputed.php
+new file mode 100644
+index 00000000..652d5bb4
+--- /dev/null
++++ b/core/modules/link/src/Plugin/DataType/LinkUrlComputed.php
+@@ -0,0 +1,91 @@
++<?php
++
++namespace Drupal\link\Plugin\DataType;
++
++use Drupal\Component\Utility\UrlHelper;
++use Drupal\Core\Cache\CacheableDependencyInterface;
++use Drupal\Core\TypedData\Plugin\DataType\Uri;
++use Drupal\Core\Url;
++
++/**
++ * Defines a data type for a link URL.
++ *
++ * @DataType(
++ *   id = "link_url",
++ *   label = @Translation("Link URL")
++ * )
++ */
++class LinkUrlComputed extends Uri implements CacheableDependencyInterface {
++
++  /**
++   * The generated URL.
++   *
++   * @var \Drupal\Core\GeneratedUrl|null
++   */
++  protected $processed = NULL;
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getValue() {
++    if ($this->processed !== NULL) {
++      return $this->processed->getGeneratedUrl();
++    }
++    /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $item */
++    $item = $this->getParent();
++    $this->processed = $item->getUrl()->toString(TRUE);
++
++    return $this->processed->getGeneratedUrl();
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function setValue($value, $notify = TRUE) {
++    if (!empty($value)) {
++      $parsed = UrlHelper::parse($value);
++      // If the path is not an external URL then add 'internal:' prefix to make
++      // it a valid uri.
++      if (strpos($parsed['path'], ':') === FALSE) {
++        $parsed['path'] = 'internal:' . $parsed['path'];
++      }
++      $url = Url::fromUri($parsed['path'], [
++        'query' => $parsed['query'],
++        'fragment' => $parsed['fragment'],
++      ]);
++      $this->processed = $url->toString(TRUE);
++    }
++    else {
++      $this->processed = NULL;
++    }
++    // Notify the parent of any changes.
++    if ($notify && isset($this->parent)) {
++      $this->parent->onChange($this->name);
++    }
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getCacheTags() {
++    $this->getValue();
++    return $this->processed->getCacheTags();
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getCacheContexts() {
++    $this->getValue();
++    return $this->processed->getCacheContexts();
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getCacheMaxAge() {
++    $this->getValue();
++    return $this->processed->getCacheMaxAge();
++  }
++
++}
+diff --git a/core/modules/link/src/Plugin/Field/FieldType/LinkItem.php b/core/modules/link/src/Plugin/Field/FieldType/LinkItem.php
+index 2849b0ac..ba3c6d4a 100644
+--- a/core/modules/link/src/Plugin/Field/FieldType/LinkItem.php
++++ b/core/modules/link/src/Plugin/Field/FieldType/LinkItem.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\link\Plugin\Field\FieldType;
+
+ use Drupal\Component\Utility\Random;
++use Drupal\Component\Utility\UrlHelper;
+ use Drupal\Core\Field\Attribute\FieldType;
+ use Drupal\Core\Field\FieldDefinitionInterface;
+ use Drupal\Core\Field\FieldItemBase;
+@@ -49,6 +50,13 @@ class LinkItem extends FieldItemBase implements LinkItemInterface {
+     $properties['uri'] = DataDefinition::create('uri')
+       ->setLabel(new TranslatableMarkup('URI'));
+
++    $properties['full_url'] = DataDefinition::create('link_url')
++      ->setLabel(t('URL'))
++      ->setDescription(t('The processed URL for this link that can e.g. be used in in href attributes.'))
++      ->setComputed(TRUE)
++      ->setInternal(FALSE)
++      ->setReadOnly(TRUE);
++
+     $properties['title'] = DataDefinition::create('string')
+       ->setLabel(new TranslatableMarkup('Link text'));
+
+@@ -58,6 +66,34 @@ class LinkItem extends FieldItemBase implements LinkItemInterface {
+     return $properties;
+   }
+
++  /**
++   * {@inheritdoc}
++   */
++  public function onChange($property_name, $notify = TRUE) {
++    // Make sure that the link item values can be kept in sync with computed
++    // property url.
++    if ($property_name === 'full_url') {
++      $property = $this->get('full_url');
++      if ($url = $property->getValue()) {
++        $parsed = UrlHelper::parse($url);
++        // If the path is not an external URL then add 'internal:' prefix to
++        // make it a valid uri.
++        if (strpos($parsed['path'], ':') === FALSE) {
++          $parsed['path'] = 'internal:' . $parsed['path'];
++        }
++        $this->writePropertyValue('uri', $parsed['path']);
++        // Only set the options if we have query parameters or a fragment.
++        if (!empty($parsed['query']) || !empty($parsed['fragment'])) {
++          $this->writePropertyValue('options', [
++            'query' => $parsed['query'],
++            'fragment' => $parsed['fragment'],
++          ]);
++        }
++      }
++    }
++    parent::onChange($property_name, $notify);
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+@@ -202,6 +238,12 @@ class LinkItem extends FieldItemBase implements LinkItemInterface {
+       ];
+     }
+     parent::setValue($values, $notify);
++    // Support setting the field item with only url property, but make sure
++    // values stay in sync if only url property is passed.
++    // NULL is a valid value, so we use array_key_exists().
++    if (is_array($values) && array_key_exists('full_url', $values) && !array_key_exists('uri', $values)) {
++      $this->onChange('full_url', FALSE);
++    }
+   }
+
+ }

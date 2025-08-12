@@ -7,6 +7,7 @@ export type TextLongFormattedField = {
 }
 
 export type LinkField = {
+  full_url: string
   uri: string
   title: string
   options: any[]

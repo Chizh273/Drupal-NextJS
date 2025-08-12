@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { Link } from '@/components/navigation/Link'
 import { DrupalHeroParagraph } from "@/types"
 import { absoluteUrl } from "@/lib/utils"
 
@@ -40,13 +41,15 @@ export default function HeroParagraph({ paragraph }: HeroParagraphProps) {
             dangerouslySetInnerHTML={{ __html: field_body.processed }}
           />
         )}
+
+        {/* TODO: https://www.drupal.org/project/drupal/issues/3066751 fix for CTA URL issue */}
         {field_cta?.uri && (
-          <a
-            href={field_cta.uri}
+          <Link
+            href={field_cta.full_url}
             className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded shadow hover:bg-blue-700 transition"
           >
             {field_cta.title || "Learn more"}
-          </a>
+          </Link>
         )}
       </div>
     </section>
