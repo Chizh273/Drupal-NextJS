@@ -10,7 +10,7 @@ To set up the local environment:
 5. Copy `.env.example` to `.env` in the `./next` folder and set your connection parameters
 6. Starts a shell session (`ddev ssh`)
 7. Install Next.js dependencies in the `./next` folder (`cd next && npm install`)
-8. Start Next.js dev server (ddev run dev)
+8. Start Next.js dev server (`ddev run dev`)
 
 ## [Setup Drupal and NextJS](https://github.com/Chizh273/Drupal-NextJS/tree/00-setup-drupal-and-nextjs)
 Prepares a Drupal site and Next.js application for local development.
