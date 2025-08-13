@@ -29,8 +29,6 @@ export const SearchApiPager = ({
     if (page < 0 || page >= totalPages) return
     let params = new URLSearchParams(window.location.search)
 
-    console.log(page)
-
     if (param_key) {
       params.set(param_key, String(page * elements_per_page))
     }

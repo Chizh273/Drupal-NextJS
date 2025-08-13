@@ -7,7 +7,13 @@ export async function POST(req: NextRequest) {
     const url = drupal.buildUrl("/webform_rest/submit")
     const result = await drupal.fetch(url.toString(), {
       method: "POST",
-      body: JSON.stringify({ webform_id: "contact", name, email, subject, message }),
+      body: JSON.stringify({
+        webform_id: "contact",
+        name,
+        email,
+        subject,
+        message,
+      }),
       headers: { "Content-Type": "application/json" },
     })
     const content = await result.json()

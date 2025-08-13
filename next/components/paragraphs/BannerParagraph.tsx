@@ -11,7 +11,7 @@ export default function BannerParagraph({ paragraph }: BannerParagraphProps) {
     blue: "bg-blue-600 text-white",
   }
   const styleClass = styleMap[paragraph.field_style] || "bg-gray-200"
-  console.log(paragraph);
+
   return (
     <section className={`rounded-lg shadow ${styleClass}`}>
       <div className="flex flex-col md:flex-row w-full">
